@@ -83,6 +83,7 @@ const PropertySchema = new Schema(
   },
   {
     timestamps: true,
+    collection: 'properties', // Specify the collection name explicitly
   }
 );
 
