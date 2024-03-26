@@ -13,7 +13,7 @@ export const POST = async (request) => {
 
     const sessionUser = await getSessionUser();
 
-    if (!session || !session.userId) {
+    if (!sessionUser || !sessionUser.userId) {
       return new Response('User ID is required', { status: 401 });
     }
 
@@ -22,7 +22,7 @@ export const POST = async (request) => {
     // Find user in database
     const user = await User.findOne({ _id: userId });
 
-    // Check if user has bookmarked the property already
+    // Check if property is bookmarked
     let isBookmarked = user.bookmarks.includes(propertyId);
 
     let message;
