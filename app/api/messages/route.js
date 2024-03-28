@@ -9,17 +9,21 @@ export const POST = async (request) => {
   try {
     await connectDB();
 
-    const { email, phone, message, property, recipient } = request.json;
+    const { name, email, phone, message, property, recipient } =
+      await request.json();
 
     const sessionUser = await getSessionUser();
 
     if (!sessionUser || !sessionUser.user) {
-      return new Response('User ID is required', { status: 401 });
+      return new Response(
+        JSON.stringify({ message: 'You must be logged in to send a message' }),
+        { status: 401 }
+      );
     }
 
     const { user } = sessionUser;
 
-    // Can not send msg to self
+    // Can not send message to self
     if (user.id === recipient) {
       return new Response(
         JSON.stringify({ message: 'Can not send a message to yourself' }),
@@ -31,6 +35,7 @@ export const POST = async (request) => {
       sender: user.id,
       recipient,
       property,
+      name,
       email,
       phone,
       body: message,
@@ -38,7 +43,7 @@ export const POST = async (request) => {
 
     await newMessage.save();
 
-    return new Response(JSON.stringify({ message: 'Message sent' }), {
+    return new Response(JSON.stringify({ message: 'Message Sent' }), {
       status: 200,
     });
   } catch (error) {
