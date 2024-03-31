@@ -23,14 +23,14 @@ export const PUT = async (request, { params }) => {
 
     const message = await Message.findById(id);
 
-    if (!message) return new Response('Message not found', { status: 404 });
+    if (!message) return new Response('Message Not Found', { status: 404 });
 
     // Verify ownership
-    if (message.recipient.toString !== userId) {
+    if (message.recipient.toString() !== userId) {
       return new Response('Unauthorized', { status: 401 });
     }
 
-    // Update msg to read/unread, depending on current status
+    // Update message to read/unread depending on the current status
     message.read = !message.read;
 
     await message.save();
