@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import AuthProvider from '@/components/AuthProvider';
 import 'react-toastify/dist/ReactToastify.css';
 import { GlobalProvider } from '@/context/GlobalContext';
+import 'photoswipe/dist/photoswipe.css';
 
 export const metadata = {
   title: 'NextJS-Rental | Find The Perfect Renatal',
